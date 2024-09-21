@@ -23,6 +23,7 @@ import androidx.compose.material.icons.filled.ArrowDropDown
 import androidx.compose.material3.BottomSheetDefaults
 import androidx.compose.material3.Divider
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -41,6 +42,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
@@ -82,7 +84,7 @@ fun MainScreen(
                         fontWeight = FontWeight.Bold
                     )
                     Spacer(modifier = Modifier.height(10.dp))
-                    Divider()
+                    HorizontalDivider()
                 }
             },
             content = {
@@ -125,7 +127,7 @@ fun MainScreen(
                     },
                     label = { Text("Enter Currency") },
                     keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Decimal),
-                    modifier = Modifier.fillMaxWidth()
+                    modifier = Modifier.fillMaxWidth().testTag("currencyInput")
                 )
 
                 Spacer(modifier = Modifier.height(12.dp))
@@ -190,7 +192,7 @@ fun CurrencyRow(
     ) {
         Spacer(modifier = Modifier.weight(1f))
         Text(text = currencyCode, fontSize = 14.sp, fontWeight = FontWeight.Bold)
-        IconButton(onClick = onDropDownIconClicked) {
+        IconButton(onClick = onDropDownIconClicked,modifier = Modifier.testTag("currencyDropDown")) {
             Icon(
                 imageVector = Icons.Default.ArrowDropDown,
                 contentDescription = "Open Bottom Sheet"

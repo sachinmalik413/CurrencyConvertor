@@ -49,6 +49,11 @@ android {
             excludes += "/META-INF/{AL2.0,LGPL2.1}"
         }
     }
+    testOptions {
+        unitTests {
+            isIncludeAndroidResources = true
+        }
+    }
 }
 
 dependencies {
@@ -61,11 +66,13 @@ dependencies {
     implementation(libs.androidx.ui.graphics)
     implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.androidx.material3)
+    implementation(libs.firebase.annotations)
     testImplementation(libs.junit)
     testImplementation(libs.junit.jupiter)
     testImplementation(libs.mockito.core)
     testImplementation(libs.mockito.kotlin)
     testImplementation(libs.androidx.core.testing)
+    testImplementation(libs.androidx.ui.test.junit4.android)
     androidTestImplementation (libs.androidx.core.testing)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
@@ -82,5 +89,6 @@ dependencies {
     kapt( libs.androidx.room.compiler)
     implementation( libs.retrofit)
     implementation( libs.converter.gson)
-    testImplementation( "org.jetbrains.kotlinx:kotlinx-coroutines-test:1.7.3")
+    testImplementation( libs.kotlinx.coroutines.test)
+    testImplementation(libs.robolectric)
 }
