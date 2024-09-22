@@ -1,10 +1,8 @@
 package com.example.currecyconvertor.presentation.main_screen
 
-import android.widget.Toast
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.test.assertHasClickAction
 import androidx.compose.ui.test.assertIsDisplayed
-import androidx.compose.ui.test.hasClickAction
 import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.onNodeWithText
@@ -16,7 +14,6 @@ import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
-import org.robolectric.Shadows
 
 @RunWith(RobolectricTestRunner::class)
 class MainScreenKtTest {
@@ -58,11 +55,8 @@ class MainScreenKtTest {
         composeTestRule.onNodeWithText("Euro").performClick()
 
         composeTestRule.runOnIdle {
-            //println("value ${state}")
             assert(eventCaptured is MainScreenEvent.CurrencyEntered)
             assert((eventCaptured as MainScreenEvent.CurrencyEntered).value == "20")
-            //assert(eventCaptured is MainScreenEvent.ToCurrencySelect)
-            //assert((eventCaptured as MainScreenEvent.ToCurrencySelect).value == "EUR")
         }
 
         composeTestRule.onNodeWithTag("currencyDropDown")
@@ -72,37 +66,6 @@ class MainScreenKtTest {
 
         composeTestRule.onNodeWithText("USD: US Dollar").assertIsDisplayed()
         composeTestRule.onNodeWithText("USD: US Dollar").assertHasClickAction().performClick()
-
-        composeTestRule.runOnIdle {
-            println("value ${state}")
-            println(eventCaptured)
-            //assert(eventCaptured is MainScreenEvent.FromCurrencySelect)
-            //assert((eventCaptured as MainScreenEvent.FromCurrencySelect).value == "USD")
-        }
-    }
-
-    @Test
-    fun `MainScreen displays error toast`() {
-        val errorMessage = "Network error"
-        val state = MainScreenState(error = errorMessage)
-
-        composeTestRule.setContent {
-            CurrencyConvertorTheme {
-                MainScreen(state = state, onEvent = {})
-            }
-        }
-
-       // composeTestRule.onNodeWithText("Network error").assertIsDisplayed()
-
-       /* val shadowToast = Shadows.shadowOf(
-            Toast.makeText(
-                composeTestRule,
-                errorMessage,
-                Toast.LENGTH_LONG
-            )
-        )
-        shadowToast.show()
-        assert(shadowToast.isShowing)*/
     }
 
     @Test

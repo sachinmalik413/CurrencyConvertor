@@ -9,7 +9,6 @@ import com.example.currecyconvertor.domain.model.Resource
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.lastOrNull
-import kotlinx.coroutines.flow.take
 import kotlinx.coroutines.flow.toList
 import kotlinx.coroutines.test.runTest
 import org.junit.Assert.assertEquals
@@ -80,7 +79,7 @@ class CurrencyRepositoryImplTest {
                 CurrencyRateEntity("USD", rate = 1.0, name = "USD")
             )
             val expectedCurrencyRates =
-                localCurrencyRates.map { it.toCurrencyRate() } // Map to CurrencyRate
+                localCurrencyRates.map { it.toCurrencyRate() }
 
             doReturn(localCurrencyRates).`when`(dao).getAllCurrencyRates()
             doThrow(RuntimeException::class).`when`(api).getLatestRates()
@@ -90,7 +89,7 @@ class CurrencyRepositoryImplTest {
             assertEquals(
                 Resource.Error(
                     message = "Couldn't reach server, check your internet connection",
-                    data = expectedCurrencyRates // Use mapped list
+                    data = expectedCurrencyRates
                 ).data,
                 result?.data
             )

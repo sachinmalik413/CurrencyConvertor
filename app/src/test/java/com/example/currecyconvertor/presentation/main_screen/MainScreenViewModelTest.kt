@@ -6,11 +6,14 @@ import com.example.currecyconvertor.domain.model.Resource
 import com.example.currecyconvertor.domain.repository.CurrencyRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.async
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.test.StandardTestDispatcher
 import kotlinx.coroutines.test.advanceUntilIdle
 import kotlinx.coroutines.test.resetMain
+import kotlinx.coroutines.test.runCurrent
 import kotlinx.coroutines.test.runTest
 import kotlinx.coroutines.test.setMain
 import org.junit.After
@@ -23,7 +26,7 @@ import org.mockito.kotlin.mock
 import org.mockito.kotlin.whenever
 
 @ExperimentalCoroutinesApi
-class MainScreenViewModelTest{
+class MainScreenViewModelTest {
 
     @get:Rule
     val instantTaskExecutorRule = InstantTaskExecutorRule()
@@ -55,7 +58,8 @@ class MainScreenViewModelTest{
 
         whenever(repository.getCurrencyRatesList()).thenReturn(flowOf(successResult))
 
-             viewModel.getCurrencyRatesList()
+        viewModel.getCurrencyRatesList()
+
 
         advanceUntilIdle()
 
@@ -63,7 +67,7 @@ class MainScreenViewModelTest{
             currencyRates = currencyRates.associateBy { it.code },
             error = null
         )
-        println("before assert")
+
         assertEquals(expectedState, viewModel.state)
     }
 
@@ -82,7 +86,7 @@ class MainScreenViewModelTest{
             currencyRates = emptyMap(),
             error = errorMessage
         )
-        println("TEST ${viewModel.state} && ${expectedState.error}")
+
         assertEquals(expectedState, viewModel.state)
     }
 
